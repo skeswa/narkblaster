@@ -23,49 +23,33 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package net.runelite.client.plugins.idlenotifier;
+package net.runelite.client.plugins.narkblaster;
 
 import com.google.inject.Provides;
-import java.time.Duration;
-import java.time.Instant;
-import java.util.Arrays;
-import java.util.List;
-import javax.inject.Inject;
-import net.runelite.api.Actor;
-import static net.runelite.api.AnimationID.*;
-import net.runelite.api.Client;
-import net.runelite.api.Constants;
-import net.runelite.api.GameState;
-import net.runelite.api.GraphicID;
-import net.runelite.api.Hitsplat;
-import net.runelite.api.NPC;
-import net.runelite.api.NPCComposition;
-import net.runelite.api.Player;
-import net.runelite.api.Skill;
-import net.runelite.api.VarPlayer;
-import net.runelite.api.Varbits;
+import net.runelite.api.*;
 import net.runelite.api.coords.WorldPoint;
-import net.runelite.api.events.AnimationChanged;
-import net.runelite.api.events.GameStateChanged;
-import net.runelite.api.events.GameTick;
-import net.runelite.api.events.GraphicChanged;
-import net.runelite.api.events.HitsplatApplied;
-import net.runelite.api.events.InteractingChanged;
-import net.runelite.api.events.NpcChanged;
-import net.runelite.api.events.VarbitChanged;
+import net.runelite.api.events.*;
 import net.runelite.client.Notifier;
 import net.runelite.client.config.ConfigManager;
 import net.runelite.client.eventbus.Subscribe;
 import net.runelite.client.plugins.Plugin;
 import net.runelite.client.plugins.PluginDescriptor;
 
+import javax.inject.Inject;
+import java.time.Duration;
+import java.time.Instant;
+import java.util.Arrays;
+import java.util.List;
+
+import static net.runelite.api.AnimationID.*;
+
 @PluginDescriptor(
-	name = "Idle Notifier",
-	description = "Send a notification when going idle, or when HP/Prayer reaches a threshold",
-	tags = {"health", "hitpoints", "notifications", "prayer"},
-	enabledByDefault = false
+	name = "Nark Blaster",
+	description = "Blasts the narks to smithereens",
+	tags = {"nark", "citizen", "blaster"},
+	enabledByDefault = true
 )
-public class IdleNotifierPlugin extends Plugin
+public class NarkBlasterPlugin extends Plugin
 {
 	private static final int IDLE_LOGOUT_WARNING_BUFFER = 20_000 / Constants.CLIENT_TICK_LENGTH;
 	private static final int COMBAT_WARNING_MILLIS = 19 * 60 * 1000; // 19 minutes
@@ -83,7 +67,7 @@ public class IdleNotifierPlugin extends Plugin
 	private Client client;
 
 	@Inject
-	private IdleNotifierConfig config;
+	private NarkBlasterConfig config;
 
 	private Instant lastAnimating;
 	private int lastAnimation = IDLE;
@@ -107,9 +91,9 @@ public class IdleNotifierPlugin extends Plugin
 	private static final int BUFF_BAR_NOT_DISPLAYED = -1;
 
 	@Provides
-	IdleNotifierConfig provideConfig(ConfigManager configManager)
+	NarkBlasterConfig provideConfig(ConfigManager configManager)
 	{
-		return configManager.getConfig(IdleNotifierConfig.class);
+		return configManager.getConfig(NarkBlasterConfig.class);
 	}
 
 	@Override

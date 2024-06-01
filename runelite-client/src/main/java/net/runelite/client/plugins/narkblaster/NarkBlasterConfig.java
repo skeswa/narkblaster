@@ -22,17 +22,12 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package net.runelite.client.plugins.idlenotifier;
+package net.runelite.client.plugins.narkblaster;
 
-import net.runelite.client.config.Config;
-import net.runelite.client.config.ConfigGroup;
-import net.runelite.client.config.ConfigItem;
-import net.runelite.client.config.Notification;
-import net.runelite.client.config.Range;
-import net.runelite.client.config.Units;
+import net.runelite.client.config.*;
 
-@ConfigGroup("idlenotifier")
-public interface IdleNotifierConfig extends Config
+@ConfigGroup("narkblaster")
+public interface NarkBlasterConfig extends Config
 {
 	@ConfigItem(
 		keyName = "animationidle",
